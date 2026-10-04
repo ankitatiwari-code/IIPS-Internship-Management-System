@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+
+{% block title %}Offer Management | IIPS{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>Offer Management</h1>
+    <p>Create and manage internship offers.</p>
+</div>
+
+
+<div class="content-card">
+
+    <h2>Create New Offer</h2>
+
+    <form method="POST">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label for="student_id">
+                    Student
+                </label>
+
+                <select
+                    id="student_id"
+                    name="student_id"
+                    required
+                >
+
+                    <option value="">
+                        Select Student
+                    </option>
+
+                    {% for student in students %}
+
+                        <option value="{{ student.id }}">
+                            {{ student.first_name }} {{ student.last_name }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="company_id">
+                    Company
+                </label>
+
+                <select
+                    id="company_id"
+                    name="company_id"
+                    required
+                >
+
+                    <option value="">
+                        Select Company
+                    </option>
+
+                    {% for company in companies %}
+
+                        <option value="{{ company.id }}">
+                            {{ company.name }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="role">
+                    Role
+                </label>
+
+                <input
+                    type="text"
+                    id="role"
+                    name="role"
+                    placeholder="e.g. Software Developer Intern"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="offer_date">
+                    Offer Date
+                </label>
+
+                <input
+                    type="date"
+                    id="offer_date"
+                    name="offer_date"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="joining_date">
+                    Joining Date
+                </label>
+
+                <input
+                    type="date"
+                    id="joining_date"
+                    name="joining_date"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="status">
+                    Status
+                </label>
+
+                <select
+                    id="status"
+                    name="status"
+                >
+
+                    <option value="Pending">
+                        Pending
+                    </option>
+
+                    <option value="Accepted">
+                        Accepted
+                    </option>
+
+                    <option value="Rejected">
+                        Rejected
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Create Offer
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<div class="content-card">
+
+    <h2>Existing Offers</h2>
+
+    <div class="table-container">
+
+        <table class="data-table">
+
+            <thead>
+
+                <tr>
+                    <th>Student</th>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Offer Date</th>
+                    <th>Joining Date</th>
+                    <th>Status</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% if offers %}
+
+                    {% for offer in offers %}
+
+                    <tr>
+
+                        <td>
+                            {{ offer.student.first_name }}
+                            {{ offer.student.last_name }}
+                        </td>
+
+                        <td>
+                            {{ offer.company.name }}
+                        </td>
+
+                        <td>
+                            {{ offer.role }}
+                        </td>
+
+                        <td>
+                            {{ offer.offer_date.strftime('%d %B %Y') }}
+                        </td>
+
+                        <td>
+
+                            {% if offer.joining_date %}
+                                {{ offer.joining_date.strftime('%d %B %Y') }}
+                            {% else %}
+                                -
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if offer.status == "Accepted" %}
+
+                                <span class="status-badge status-accepted">
+                                    Accepted
+                                </span>
+
+                            {% elif offer.status == "Rejected" %}
+
+                                <span class="status-badge status-rejected">
+                                    Rejected
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge status-pending">
+                                    {{ offer.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="6">
+                            No internship offers have been created yet.
+                        </td>
+
+                    </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

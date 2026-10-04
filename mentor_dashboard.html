@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}Mentor Dashboard | IIPS{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>Mentor Dashboard</h1>
+    <p>Here's an overview of your assigned students and internship activities.</p>
+</div>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <p class="stat-label">Assigned Students</p>
+        <p class="stat-value">{{ assigned_count }}</p>
+    </div>
+
+    <div class="stat-card">
+        <p class="stat-label">Ongoing Internships</p>
+        <p class="stat-value">{{ ongoing_count }}</p>
+    </div>
+
+    <div class="stat-card">
+        <p class="stat-label">Completed</p>
+        <p class="stat-value">{{ completed_count }}</p>
+    </div>
+
+    <div class="stat-card">
+        <p class="stat-label">Pending Evaluations</p>
+        <p class="stat-value">{{ pending_evaluations }}</p>
+    </div>
+
+</div>
+
+<div class="content-card">
+
+    <div class="section-header">
+        <h2>Recent Student Activity</h2>
+        <a href="{{ url_for('my_students') }}" class="btn btn-secondary">
+            View Students
+        </a>
+    </div>
+
+    <div class="table-container">
+
+        <table class="data-table">
+
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Company</th>
+                    <th>Internship Role</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% if assigned_internships %}
+
+                    {% for internship in assigned_internships[:5] %}
+
+                    <tr>
+
+                        <td>
+                            {{ internship.student.first_name }}
+                            {{ internship.student.last_name }}
+                        </td>
+
+                        <td>
+                            {{ internship.company.name }}
+                        </td>
+
+                        <td>
+                            {{ internship.role }}
+                        </td>
+
+                        <td>
+
+                            {% if internship.status == "Completed" %}
+
+                                <span class="status-badge status-completed">
+                                    Completed
+                                </span>
+
+                            {% elif internship.status == "Ongoing" %}
+
+                                <span class="status-badge status-ongoing">
+                                    Ongoing
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge status-pending">
+                                    {{ internship.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="4">
+                            No students are currently assigned to you.
+                        </td>
+                    </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

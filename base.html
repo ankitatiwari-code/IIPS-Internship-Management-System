@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}IIPS Internship Management System{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- Top Navigation -->
+        <nav class="navbar">
+
+            <div class="navbar-brand">
+                <span class="brand-name">IIPS</span>
+                <span class="brand-subtitle">
+                    Internship Management System
+                </span>
+            </div>
+
+            <div class="navbar-actions">
+                <span class="user-name">
+                    {{ current_user.first_name }} {{ current_user.last_name }}
+                </span>
+
+                <a href="{{ url_for('logout') }}" class="logout-btn">
+                    Logout
+                </a>
+            </div>
+
+        </nav>
+
+
+        <!-- Application Layout -->
+        <div class="app-layout">
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+
+                <div class="sidebar-menu">
+
+                    {% if current_user.role == "student" %}
+
+                        <p class="sidebar-section-title">Main</p>
+
+                        <a href="{{ url_for('student_dashboard') }}"
+                           class="nav-link {% if request.endpoint == 'student_dashboard' %}active{% endif %}">
+                            Dashboard
+                        </a>
+
+                        <a href="{{ url_for('internship_registration') }}"
+                           class="nav-link {% if request.endpoint == 'internship_registration' %}active{% endif %}">
+                            Internship Registration
+                        </a>
+
+                        <a href="{{ url_for('my_internship') }}"
+                           class="nav-link {% if request.endpoint == 'my_internship' %}active{% endif %}">
+                            My Internship
+                        </a>
+
+                        <a href="{{ url_for('company_database') }}"
+                           class="nav-link {% if request.endpoint == 'company_database' %}active{% endif %}">
+                            Companies
+                        </a>
+
+                        <a href="{{ url_for('offer_tracking') }}"
+                           class="nav-link {% if request.endpoint == 'offer_tracking' %}active{% endif %}">
+                            Offers
+                        </a>
+
+                        <a href="{{ url_for('my_evaluation') }}"
+                           class="nav-link {% if request.endpoint == 'my_evaluation' %}active{% endif %}">
+                            Evaluation
+                        </a>
+
+
+                    {% elif current_user.role == "mentor" %}
+
+                        <p class="sidebar-section-title">Mentor</p>
+
+                        <a href="{{ url_for('mentor_dashboard') }}"
+                           class="nav-link {% if request.endpoint == 'mentor_dashboard' %}active{% endif %}">
+                            Mentor Dashboard
+                        </a>
+
+                        <a href="{{ url_for('my_students') }}"
+                           class="nav-link {% if request.endpoint == 'my_students' %}active{% endif %}">
+                            My Students
+                        </a>
+
+
+                    {% elif current_user.role == "admin" %}
+
+                        <p class="sidebar-section-title">Admin</p>
+
+                        <a href="{{ url_for('admin_dashboard') }}"
+                           class="nav-link {% if request.endpoint == 'admin_dashboard' %}active{% endif %}">
+                            Admin Dashboard
+                        </a>
+
+                        <a href="{{ url_for('analytics') }}"
+                           class="nav-link {% if request.endpoint == 'analytics' %}active{% endif %}">
+                            Analytics
+                        </a>
+
+                        <a href="{{ url_for('company_management') }}"
+                           class="nav-link {% if request.endpoint == 'company_management' %}active{% endif %}">
+                            Company Management
+                        </a>
+
+                        <a href="{{ url_for('internship_management') }}"
+                           class="nav-link {% if request.endpoint == 'internship_management' %}active{% endif %}">
+                            Internship Management
+                        </a>
+
+                        <a href="{{ url_for('student_management') }}"
+                           class="nav-link {% if request.endpoint == 'student_management' %}active{% endif %}">
+                            Student Management
+                        </a>
+
+                        <a href="{{ url_for('offer_management') }}"
+                           class="nav-link {% if request.endpoint == 'offer_management' %}active{% endif %}">
+                            Offer Management
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            </aside>
+
+
+            <!-- Main Content -->
+            <main class="main-content">
+
+                {% block content %}
+                {% endblock %}
+
+            </main>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

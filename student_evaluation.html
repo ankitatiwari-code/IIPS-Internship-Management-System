@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+
+{% block title %}Student Evaluation | IIPS{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>Student Evaluation</h1>
+    <p>Evaluate the student's internship performance.</p>
+</div>
+
+<div class="content-card">
+
+    <div class="section-header">
+
+        <h2>Student Information</h2>
+
+        {% if internship.status == "Ongoing" %}
+
+            <span class="status-badge status-ongoing">
+                Internship Ongoing
+            </span>
+
+        {% elif internship.status == "Completed" %}
+
+            <span class="status-badge status-completed">
+                Internship Completed
+            </span>
+
+        {% else %}
+
+            <span class="status-badge status-pending">
+                {{ internship.status }}
+            </span>
+
+        {% endif %}
+
+    </div>
+
+    <div class="form-row">
+
+        <div class="form-group">
+            <label class="form-label">Student Name</label>
+            <p>
+                {{ internship.student.first_name }}
+                {{ internship.student.last_name }}
+            </p>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Email</label>
+            <p>{{ internship.student.email }}</p>
+        </div>
+
+    </div>
+
+    <div class="form-row">
+
+        <div class="form-group">
+            <label class="form-label">Company</label>
+            <p>{{ internship.company.name }}</p>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Internship Role</label>
+            <p>{{ internship.role }}</p>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="content-card mt-20">
+
+    <div class="section-header">
+        <h2>Performance Evaluation</h2>
+    </div>
+
+    <form method="POST">
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label class="form-label" for="technical-skills">
+                    Technical Skills
+                </label>
+
+                <select
+                    id="technical-skills"
+                    name="technical_skills"
+                    class="form-control"
+                    required
+                >
+
+                    <option value="">Select score</option>
+
+                    <option value="Excellent"
+                        {% if evaluation and evaluation.technical_score == 5 %}
+                            selected
+                        {% endif %}
+                    >
+                        Excellent
+                    </option>
+
+                    <option value="Good"
+                        {% if evaluation and evaluation.technical_score == 4 %}
+                            selected
+                        {% endif %}
+                    >
+                        Good
+                    </option>
+
+                    <option value="Satisfactory"
+                        {% if evaluation and evaluation.technical_score == 3 %}
+                            selected
+                        {% endif %}
+                    >
+                        Satisfactory
+                    </option>
+
+                    <option value="Needs Improvement"
+                        {% if evaluation and evaluation.technical_score == 2 %}
+                            selected
+                        {% endif %}
+                    >
+                        Needs Improvement
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label" for="communication">
+                    Communication
+                </label>
+
+                <select
+                    id="communication"
+                    name="communication"
+                    class="form-control"
+                    required
+                >
+
+                    <option value="">Select score</option>
+
+                    <option value="Excellent"
+                        {% if evaluation and evaluation.communication_score == 5 %}
+                            selected
+                        {% endif %}
+                    >
+                        Excellent
+                    </option>
+
+                    <option value="Good"
+                        {% if evaluation and evaluation.communication_score == 4 %}
+                            selected
+                        {% endif %}
+                    >
+                        Good
+                    </option>
+
+                    <option value="Satisfactory"
+                        {% if evaluation and evaluation.communication_score == 3 %}
+                            selected
+                        {% endif %}
+                    >
+                        Satisfactory
+                    </option>
+
+                    <option value="Needs Improvement"
+                        {% if evaluation and evaluation.communication_score == 2 %}
+                            selected
+                        {% endif %}
+                    >
+                        Needs Improvement
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label class="form-label" for="professionalism">
+                    Professionalism
+                </label>
+
+                <select
+                    id="professionalism"
+                    name="professionalism"
+                    class="form-control"
+                    required
+                >
+
+                    <option value="">Select score</option>
+
+                    <option value="Excellent"
+                        {% if evaluation and evaluation.professionalism_score == 5 %}
+                            selected
+                        {% endif %}
+                    >
+                        Excellent
+                    </option>
+
+                    <option value="Good"
+                        {% if evaluation and evaluation.professionalism_score == 4 %}
+                            selected
+                        {% endif %}
+                    >
+                        Good
+                    </option>
+
+                    <option value="Satisfactory"
+                        {% if evaluation and evaluation.professionalism_score == 3 %}
+                            selected
+                        {% endif %}
+                    >
+                        Satisfactory
+                    </option>
+
+                    <option value="Needs Improvement"
+                        {% if evaluation and evaluation.professionalism_score == 2 %}
+                            selected
+                        {% endif %}
+                    >
+                        Needs Improvement
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label" for="overall-performance">
+                    Overall Performance
+                </label>
+
+                <select
+                    id="overall-performance"
+                    name="overall_performance"
+                    class="form-control"
+                    required
+                >
+
+                    <option value="">Select score</option>
+
+                    <option value="Excellent"
+                        {% if evaluation and evaluation.overall_score == 5 %}
+                            selected
+                        {% endif %}
+                    >
+                        Excellent
+                    </option>
+
+                    <option value="Good"
+                        {% if evaluation and evaluation.overall_score == 4 %}
+                            selected
+                        {% endif %}
+                    >
+                        Good
+                    </option>
+
+                    <option value="Satisfactory"
+                        {% if evaluation and evaluation.overall_score == 3 %}
+                            selected
+                        {% endif %}
+                    >
+                        Satisfactory
+                    </option>
+
+                    <option value="Needs Improvement"
+                        {% if evaluation and evaluation.overall_score == 2 %}
+                            selected
+                        {% endif %}
+                    >
+                        Needs Improvement
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+
+            <label class="form-label" for="mentor-remarks">
+                Mentor Remarks
+            </label>
+
+            <textarea
+                id="mentor-remarks"
+                name="mentor_remarks"
+                class="form-control"
+                rows="5"
+                placeholder="Enter your feedback..."
+            >{% if evaluation %}{{ evaluation.overall_remarks or "" }}{% endif %}</textarea>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Submit Evaluation
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

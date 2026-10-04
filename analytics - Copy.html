@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics | IIPS{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>Internship Analytics</h1>
+    <p>View an overview of internship statistics and company information.</p>
+</div>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <p class="stat-label">Total Internships</p>
+        <p class="stat-value">{{ total_internships }}</p>
+    </div>
+
+    <div class="stat-card">
+        <p class="stat-label">Completed</p>
+        <p class="stat-value">{{ completed_internships }}</p>
+    </div>
+
+    <div class="stat-card">
+        <p class="stat-label">Ongoing</p>
+        <p class="stat-value">{{ ongoing_internships }}</p>
+    </div>
+
+    <div class="stat-card">
+        <p class="stat-label">Registered Companies</p>
+        <p class="stat-value">{{ registered_companies }}</p>
+    </div>
+
+</div>
+
+<div class="content-card">
+
+    <div class="section-header">
+        <h2>Internship Status</h2>
+    </div>
+
+    <div class="analytics-section">
+
+        <div class="analytics-row">
+            <div class="analytics-label">
+                <span>Completed</span>
+                <span>{{ completed_internships }}</span>
+            </div>
+
+            <div class="progress-bar">
+                <div
+                    class="progress-fill"
+                    style="width: {{ completed_percentage }}%;">
+                </div>
+            </div>
+        </div>
+
+        <div class="analytics-row">
+            <div class="analytics-label">
+                <span>Ongoing</span>
+                <span>{{ ongoing_internships }}</span>
+            </div>
+
+            <div class="progress-bar">
+                <div
+                    class="progress-fill"
+                    style="width: {{ ongoing_percentage }}%;">
+                </div>
+            </div>
+        </div>
+
+        <div class="analytics-row">
+            <div class="analytics-label">
+                <span>Pending</span>
+                <span>{{ pending_internships }}</span>
+            </div>
+
+            <div class="progress-bar">
+                <div
+                    class="progress-fill"
+                    style="width: {{ pending_percentage }}%;">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="content-card">
+
+    <div class="section-header">
+        <h2>Internships by Industry</h2>
+    </div>
+
+    <div class="table-container">
+
+        <table class="data-table">
+
+            <thead>
+                <tr>
+                    <th>Industry</th>
+                    <th>Total Internships</th>
+                    <th>Completed</th>
+                    <th>Ongoing</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% if industry_data %}
+
+                    {% for industry in industry_data %}
+
+                    <tr>
+                        <td>{{ industry.name }}</td>
+                        <td>{{ industry.total }}</td>
+                        <td>{{ industry.completed }}</td>
+                        <td>{{ industry.ongoing }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="4">
+                            No industry data available.
+                        </td>
+                    </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Internship Registration | IIPS{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>Internship Registration</h1>
+    <p>Submit your internship details for registration.</p>
+</div>
+
+<div class="content-card">
+
+    <form method="POST">
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label class="form-label" for="company">
+                    Company Name
+                </label>
+
+                <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    class="form-control"
+                    placeholder="Enter company name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="role">
+                    Internship Role
+                </label>
+
+                <input
+                    type="text"
+                    id="role"
+                    name="role"
+                    class="form-control"
+                    placeholder="e.g. Software Intern"
+                    required
+                >
+            </div>
+
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label class="form-label" for="start-date">
+                    Start Date
+                </label>
+
+                <input
+                    type="date"
+                    id="start-date"
+                    name="start_date"
+                    class="form-control"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="end-date">
+                    End Date
+                </label>
+
+                <input
+                    type="date"
+                    id="end-date"
+                    name="end_date"
+                    class="form-control"
+                    required
+                >
+            </div>
+
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label class="form-label" for="internship-type">
+                    Internship Type
+                </label>
+
+                <select
+                    id="internship-type"
+                    name="internship_type"
+                    class="form-control"
+                    required
+                >
+                    <option value="">Select type</option>
+                    <option value="On-site">On-site</option>
+                    <option value="Remote">Remote</option>
+                    <option value="Hybrid">Hybrid</option>
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label class="form-label" for="mentor">
+                    Mentor
+                </label>
+
+                <select
+                    id="mentor"
+                    name="mentor_id"
+                    class="form-control"
+                >
+
+                    <option value="">
+                        Select mentor
+                    </option>
+
+                    {% for mentor in mentors %}
+
+                    <option value="{{ mentor.id }}">
+                        {{ mentor.first_name }} {{ mentor.last_name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label" for="description">
+                Internship Description
+            </label>
+
+            <textarea
+                id="description"
+                name="description"
+                class="form-control"
+                rows="5"
+                placeholder="Describe your internship..."
+            ></textarea>
+
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">
+            Submit Registration
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

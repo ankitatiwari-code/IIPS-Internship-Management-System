@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Offer Tracking | IIPS{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>Offer Tracking</h1>
+    <p>View and manage your internship offers.</p>
+</div>
+
+<div class="content-card">
+
+    <div class="table-container">
+
+        <table class="data-table">
+
+            <thead>
+
+                <tr>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Offer Date</th>
+                    <th>Joining Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% if offers %}
+
+                    {% for offer in offers %}
+
+                    <tr>
+
+                        <td>
+                            {{ offer.company.name }}
+                        </td>
+
+                        <td>
+                            {{ offer.role }}
+                        </td>
+
+                        <td>
+                            {{ offer.offer_date.strftime('%d %B %Y') }}
+                        </td>
+
+                        <td>
+
+                            {% if offer.joining_date %}
+                                {{ offer.joining_date.strftime('%d %B %Y') }}
+                            {% else %}
+                                -
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if offer.status == "Accepted" %}
+
+                                <span class="status-badge status-accepted">
+                                    Accepted
+                                </span>
+
+                            {% elif offer.status == "Rejected" %}
+
+                                <span class="status-badge status-rejected">
+                                    Rejected
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge status-pending">
+                                    {{ offer.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                            >
+                                View
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="6">
+                            No internship offers found.
+                        </td>
+
+                    </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Company Management | IIPS{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>Company Management</h1>
+    <p>Manage companies registered with the institution.</p>
+</div>
+
+<div class="content-card">
+
+    <div class="section-header">
+        <h2>Company Records</h2>
+
+        <button type="button" class="btn btn-primary">
+            Add Company
+        </button>
+    </div>
+
+    <div class="table-container">
+
+        <table class="data-table">
+
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Industry</th>
+                    <th>Location</th>
+                    <th>Contact Person</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% if companies %}
+
+                    {% for company in companies %}
+
+                    <tr>
+
+                        <td>
+                            {{ company.name }}
+                        </td>
+
+                        <td>
+                            {{ company.industry or "—" }}
+                        </td>
+
+                        <td>
+                            {{ company.location or "—" }}
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                        <td>
+
+                            {% if company.status == "Available" %}
+
+                                <span class="status-badge status-accepted">
+                                    Active
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge status-pending">
+                                    {{ company.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <button type="button" class="btn btn-secondary">
+                                Edit
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="6">
+                            No company records found.
+                        </td>
+                    </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

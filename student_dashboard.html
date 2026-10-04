@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard | IIPS{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>Student Dashboard</h1>
+    <p>Here's an overview of your internship activities and recent updates.</p>
+</div>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <p class="stat-label">Active Internship</p>
+        <p class="stat-value">{{ active_internship_count }}</p>
+    </div>
+
+    <div class="stat-card">
+        <p class="stat-label">Applications</p>
+        <p class="stat-value">{{ applications_count }}</p>
+    </div>
+
+    <div class="stat-card">
+        <p class="stat-label">Offers Received</p>
+        <p class="stat-value">{{ offers_count }}</p>
+    </div>
+
+    <div class="stat-card">
+        <p class="stat-label">Evaluation Status</p>
+        <p class="stat-value">{{ evaluation_status }}</p>
+    </div>
+
+</div>
+
+<div class="content-card">
+
+    <div class="section-header">
+        <h2>Recent Internship Activity</h2>
+
+        <a href="{{ url_for('my_internship') }}" class="btn btn-secondary">
+            View All
+        </a>
+    </div>
+
+    <div class="table-container">
+
+        <table class="data-table">
+
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% if internships %}
+
+                    {% for internship in internships %}
+
+                    <tr>
+
+                        <td>
+                            {{ internship.company.name }}
+                        </td>
+
+                        <td>
+                            {{ internship.role }}
+                        </td>
+
+                        <td>
+                            {{ internship.start_date.strftime('%d %b %Y') }}
+                            -
+                            {{ internship.end_date.strftime('%d %b %Y') }}
+                        </td>
+
+                        <td>
+
+                            {% if internship.status == "Ongoing" %}
+
+                                <span class="status-badge status-ongoing">
+                                    Ongoing
+                                </span>
+
+                            {% elif internship.status == "Completed" %}
+
+                                <span class="status-badge status-completed">
+                                    Completed
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge status-pending">
+                                    {{ internship.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="4">
+                            No internship activity found.
+                        </td>
+                    </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

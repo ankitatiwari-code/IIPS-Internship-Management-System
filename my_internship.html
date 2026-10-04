@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block title %}My Internship | IIPS{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>My Internship</h1>
+    <p>View and track your current internship details.</p>
+</div>
+
+
+{% if internship %}
+
+<div class="content-card">
+
+    <div class="section-header">
+
+        <h2>Internship Details</h2>
+
+        {% if internship.status == "Ongoing" %}
+
+            <span class="status-badge status-ongoing">
+                Ongoing
+            </span>
+
+        {% elif internship.status == "Completed" %}
+
+            <span class="status-badge status-completed">
+                Completed
+            </span>
+
+        {% else %}
+
+            <span class="status-badge status-pending">
+                {{ internship.status }}
+            </span>
+
+        {% endif %}
+
+    </div>
+
+
+    <div class="form-row">
+
+        <div class="form-group">
+            <label class="form-label">Company</label>
+            <p>{{ internship.company.name }}</p>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Role</label>
+            <p>{{ internship.role }}</p>
+        </div>
+
+    </div>
+
+
+    <div class="form-row">
+
+        <div class="form-group">
+            <label class="form-label">Start Date</label>
+            <p>{{ internship.start_date.strftime('%d %B %Y') }}</p>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">End Date</label>
+            <p>{{ internship.end_date.strftime('%d %B %Y') }}</p>
+        </div>
+
+    </div>
+
+
+    <div class="form-row">
+
+        <div class="form-group">
+            <label class="form-label">Internship Type</label>
+            <p>{{ internship.internship_type }}</p>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Faculty Mentor</label>
+
+            {% if internship.mentor %}
+
+                <p>
+                    {{ internship.mentor.first_name }}
+                    {{ internship.mentor.last_name }}
+                </p>
+
+            {% else %}
+
+                <p>Not assigned</p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label class="form-label">Internship Description</label>
+
+        <p>
+            {% if internship.description %}
+                {{ internship.description }}
+            {% else %}
+                No description provided.
+            {% endif %}
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="content-card mt-20">
+
+    <div class="section-header">
+        <h2>Internship Progress</h2>
+    </div>
+
+
+    <div class="table-container">
+
+        <table class="data-table">
+
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+
+                    <td>
+                        Internship Registered
+                    </td>
+
+                    <td>
+                        {{ internship.created_at.strftime('%d %B %Y') }}
+                    </td>
+
+                    <td>
+
+                        <span class="status-badge status-completed">
+                            Completed
+                        </span>
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Mentor Assigned
+                    </td>
+
+                    <td>
+                        {% if internship.mentor %}
+                            Assigned
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+
+                    <td>
+
+                        {% if internship.mentor %}
+
+                            <span class="status-badge status-completed">
+                                Completed
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-badge status-pending">
+                                Pending
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Final Evaluation
+                    </td>
+
+                    <td>
+                        -
+                    </td>
+
+                    <td>
+
+                        <span class="status-badge status-pending">
+                            Pending
+                        </span>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+{% else %}
+
+<div class="content-card">
+
+    <div class="section-header">
+        <h2>No Internship Registered</h2>
+    </div>
+
+    <p>
+        You have not registered an internship yet.
+    </p>
+
+    <br>
+
+    <a
+        href="{{ url_for('internship_registration') }}"
+        class="btn btn-primary"
+    >
+        Register Internship
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

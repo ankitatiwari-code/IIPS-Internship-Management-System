@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Company Database | IIPS{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>Company Database</h1>
+    <p>Browse companies available for internship opportunities.</p>
+</div>
+
+<div class="content-card">
+
+    <div class="section-header">
+
+        <h2>Registered Companies</h2>
+
+        <form method="GET" action="{{ url_for('company_database') }}">
+
+            <input
+                type="search"
+                name="search"
+                value="{{ search }}"
+                class="form-control"
+                placeholder="Search companies..."
+            >
+
+        </form>
+
+    </div>
+
+
+    <div class="table-container">
+
+        <table class="data-table">
+
+            <thead>
+
+                <tr>
+                    <th>Company</th>
+                    <th>Industry</th>
+                    <th>Location</th>
+                    <th>Internship Type</th>
+                    <th>Status</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% if companies %}
+
+                    {% for company in companies %}
+
+                    <tr>
+
+                        <td>
+                            {{ company.name }}
+                        </td>
+
+                        <td>
+                            {{ company.industry or "Not specified" }}
+                        </td>
+
+                        <td>
+                            {{ company.location or "Not specified" }}
+                        </td>
+
+                        <td>
+                            {{ company.internship_type or "Not specified" }}
+                        </td>
+
+                        <td>
+
+                            {% if company.status == "Available" %}
+
+                                <span class="status-badge status-completed">
+                                    Available
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge status-pending">
+                                    {{ company.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="5">
+                            No companies found.
+                        </td>
+
+                    </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

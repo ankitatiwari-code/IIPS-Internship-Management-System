@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Student Management | IIPS{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-header">
+    <h1>Student Management</h1>
+    <p>Manage student records and internship participation.</p>
+</div>
+
+<div class="content-card">
+
+    <div class="section-header">
+        <h2>Student Records</h2>
+
+        <input
+            type="search"
+            class="form-control"
+            placeholder="Search students..."
+            style="max-width: 250px;"
+        >
+    </div>
+
+    <div class="table-container">
+
+        <table class="data-table">
+
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Enrollment No.</th>
+                    <th>Email</th>
+                    <th>Internship</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% if students %}
+
+                    {% for student in students %}
+
+                        {% set internship = student_internships.get(student.id) %}
+
+                        <tr>
+
+                            <td>
+                                {{ student.first_name }}
+                                {{ student.last_name }}
+                            </td>
+
+                            <td>
+                                —
+                            </td>
+
+                            <td>
+                                {{ student.email }}
+                            </td>
+
+                            <td>
+
+                                {% if internship %}
+
+                                    {{ internship.company.name }}
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                {% if internship %}
+
+                                    {% if internship.status == "Ongoing" %}
+
+                                        <span class="status-badge status-ongoing">
+                                            Active
+                                        </span>
+
+                                    {% elif internship.status == "Completed" %}
+
+                                        <span class="status-badge status-completed">
+                                            Completed
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="status-badge status-pending">
+                                            {{ internship.status }}
+                                        </span>
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <span class="status-badge status-pending">
+                                        Not Assigned
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                <button type="button" class="btn btn-secondary">
+                                    View
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="6">
+                            No student records found.
+                        </td>
+                    </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
